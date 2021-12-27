@@ -4,7 +4,7 @@ Preparation for Algorithms exam.
 
 ## Índice
 
-> Capítulos correspondientes al libro **Fundamentos de la Algoritmia** de *Brassard* y *Bratley*.
+> Se indican los capítulos correspondientes al libro **Fundamentos de la Algoritmia** de *Brassard* y *Bratley*.
 
 - Tema 1: [Análisis de algoritmos.](./tema1)
   - Capítulos 1 a 4.
@@ -20,3 +20,5 @@ Preparation for Algorithms exam.
   - Capítulo 9.
 - Tema 7: [Complejidad computacional.](./tema7)
   - Capítulo 12.
+
+> *parte del capítulo.
