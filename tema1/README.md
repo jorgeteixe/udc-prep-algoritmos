@@ -115,3 +115,24 @@ O(n!) \rightarrow \text{ factorial}\\
 Gráfico de las cotas comunes:
 
 ![Common bounds chart](images/commonboundschart.png)
+
+## Resolución de recurrencias divide y vencerás
+
+Para resolver recurrencias de divide y vencerás podemos ayudarnos de la siguiente regla.
+
+<!--
+```latex
+\begin{equation*}
+T(n) = ℓT(n/b)+cn^k
+\\
+T(n) \in \left\{
+        \begin{array}{ll}
+            \Theta(n^k) & \quad ℓ < b^k \\
+            \Theta(n^k\log_b{n}) & \quad  ℓ = b^k \\
+            \Theta(n^{log_b{ℓ}}) & \quad  ℓ > b^k \\
+        \end{array}
+    \right.
+\end{equation*}
+```
+-->
+![Divide and conquer: Recurrence solution](images/divideconquerSolution.svg)
