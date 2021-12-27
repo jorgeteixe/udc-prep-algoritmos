@@ -88,3 +88,30 @@ T_1(n) * T_2(n) = O(f(n) * g(n))
 ```
 -->
 ![Big O operations](images/operations.svg)
+
+### Gráficos
+
+Comparación de las posibles cotas.
+
+![Comparison between bounds](images/comparison.png)
+
+Cotas comunes:
+<!--
+```latex
+O(1) \rightarrow \text{ constante}\\
+O(\log{}n) \rightarrow \text{ logarítmica}\\
+O(\log{}\log{}n) \rightarrow \text{ log-logarítmica}\\
+O(n) \rightarrow \text{ lineal}\\
+O(n\log{}n) \rightarrow \text{ linear logarítmica}\\
+O(n^2) \rightarrow \text{ cuadrática}\\
+O(n^3) \rightarrow \text{ cúbica}\\
+O(2^n) \rightarrow \text{ exponencial}\\
+O(n!) \rightarrow \text{ factorial}\\
+```
+-->
+
+![Common bounds](images/commonbounds.svg)
+
+Gráfico de las cotas comunes:
+
+![Common bounds chart](images/commonboundschart.png)
