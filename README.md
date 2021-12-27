@@ -43,7 +43,8 @@ Preparation for Algorithms exam.
   - [Euclides](libro/capitulo2/83-Euclides.md)
   - [Fibrec](libro/capitulo2/83-Fibrec.md)
   - [Fibiter](libro/capitulo2/84-Fibiter.md)
-- Capítulo 4: Notación asintótica
+- Capítulo 3: Notación asintótica
+- Capítulo 4: [Análisis de algoritmos](./libro/capitulo4)
   - [Fibiter](libro/capitulo4/113-Fibiter.md)
   - [Fibrec](libro/capitulo4/115-Fibrec.md)
   - [Búsqueda binaria](libro/capitulo4/116-Búsqueda%20binaria.md)
@@ -52,7 +53,6 @@ Preparation for Algorithms exam.
   - [Euclides](libro/capitulo4/122-Euclides.md)
   - [Hanoi](libro/capitulo4/124-Hanoi.md)
   - [contar](libro/capitulo4/128-contar.md)
-- Capítulo 4: [Análisis de algoritmos](./libro/capitulo4)
 - Capítulo 5: [Estructuras de datos](./libro/capitulo5)
 - Capítulo 6: [Algoritmos voraces](./libro/capitulo6)
 - Capítulo 7: [Divide y vencerás](./libro/capitulo7)
