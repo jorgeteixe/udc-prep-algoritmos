@@ -449,3 +449,135 @@ int intcmp(const void *a, const void *b) {
 }
 
 ```
+
+## Árbol binario de búsqueda
+
+- **Camino**: secuencia de nodos para llegar de uno a otro.
+- **Profundidad**: longitud del camino entre un nodo y la raíz.
+  - En un ABB, el valor medio de la profundidad es O(log n).
+- **Altura**: es el camino más largo del nodo a una hoja.
+- **Altura de un árbol**: es la altura de la raíz.
+
+![Binary search tree properties](images/binaryTreeProps.jpeg)
+
+- Operaciones básicas:
+  - `Buscar`: devuelve la posición del nodo con la clave buscada.
+    ![Binary search tree search](images/binaryTreeSearch.jpeg)
+  - `Insertar`: coloca una clave.
+  - `Eliminar`: borra una clave.
+    - Si la clave está en una hoja, se elimina de inmediato.
+    - Si el nodo tiene un hijo, se ajusta un puntero.
+    - Si el nodo tiene 2 hijos, se sustituye la clave por la más pequeña del subárbol derecho.
+
+> Si se espera que se haya pocas eliminaciones, la *eliminación perezosa* (*lazy delete*) es una buena estrategia. Se marca el elemento como borrado pero no se elimina el nodo. Se puede llevar un contador de apariciones si se esperan claves duplicadas.
+
+```pseudo
+tipo PNodo = ^Nodo
+tipo nodo = registro
+    Elemento : TipoElemento
+    Izquierdo, Derecho : PNodo
+fin registro
+tipo ABB = PNodo
+
+procedimiento CrearABB (var A)
+    A := nil
+fin procedimiento
+
+función Buscar (x, A) : PNodo { caso medio: O(logn), peor: O(n) }
+    si A = nil entonces devolver nil
+    sino si x = A^.Elemento entonces devolver A
+    sino si x < A^.Elemento entonces
+        devolver Buscar (x, A^.Izquierdo)
+    sino
+        devolver Buscar (x, A^.Derecho)
+fin función
+
+función BuscarMin (A) : PNodo { caso medio: O(logn), peor: O(n) }
+    si A = nil entonces devolver nil
+    sino si A^.Izquierdo = nil entonces devolver A
+    sino devolver BuscarMin (A^.Izquierdo)
+fin función
+
+procedimiento Insertar (x, var A) { caso medio: O(logn), peor: O(n) }
+    si A = nil entonces
+        nuevo (A);
+        si A = nil entonces
+            error Sin memoria
+        sino
+            A^.Elemento := x
+            A^.Izquierdo := nil
+            A^.Derecho := nil
+    sino si x < A^.Elemento entonces
+        Insertar(x, A^.Izquierdo)
+    sino si x > A^.Elemento entonces
+        Insertar(x, A^.Derecho)
+    { si x = A^.Elemento : nada }
+fin procedimiento
+
+procedimiento Eliminar (x, var A)  { caso medio: O(logn), peor: O(n) }
+    si A = nil entonces
+        error No encontrado
+    sino si x < A^.Elemento entonces
+        Eliminar(x, A^.Izquierdo)
+    sino si x > A^.Elemento entonces
+        Eliminar(x, A^.Derecho)
+    sino  { x = A^.Elemento }
+        si A^.Izquierdo = nil entonces
+            tmp := A
+            A := A^.Derecho
+            liberar(tmp)
+        si A^.Derecho = nil entonces
+            tmp := A
+            A := A^.Izquierdo
+            liberar(tmp)
+        sino
+            tmp := BuscarMin(A^.Derercho)
+            A^.Elemento := tmp^.Elemento
+            Eliminar(A^.Elemento, A^.Derecho)
+fin procedimiento
+```
+
+### Recorridos árbol
+
+En **orden** [O(n)]: se procesa el subárbol *izquierdo*, luego el nodo *actual* y, por último, el subárbol *derecho*.
+
+```pseudo
+procedimiento Visualizar (A)
+    si A <> nil entonces
+        Visualizar (A^.Izquierdo)
+        Escribir (A^.Elemento)
+        Visualizar (A^.Derecho)
+fin procedimiento
+```
+
+**Post-orden** [O(n)]: Ambos subárboles primero.
+
+```pseudo
+función Altura (A) : número
+    si A = nil entonces
+        devolver -1
+    sino
+        devolver 1 + max(Altura(A^.Izquierdo), Altura(A^.Derecho))
+fin función
+```
+
+**Pre-orden** [O(n)]: El nodo se procesa antes.
+
+```pseudo
+// TODO: función marca cada nodo con su profundidad
+```
+
+**Orden de nivel** [O(n)]: Todos los nodos con profundidad p se procesan antes que cualquier nodo con profundidad p+1.
+
+```pseudo
+procedimiento OrdenDeNivel (A)
+    CrearCola(C)
+    si A <> nil entonces InsertarEncola (A, C)
+    mientras no ColaVacia(C) hacer
+        p := QuitarPrimero(C)
+        escribir(p^.Elemento) { Operación principal }
+        si p^.Izq <> nil entonces InsertarEnCola(p^.Izq, C)
+        si p^.Der <> nil entonces InsertarEnCola(p^.Der, C)
+    fin mientras
+fin procedimiento
+```
