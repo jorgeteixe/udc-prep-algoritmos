@@ -113,6 +113,10 @@ void desapilar(pila *p) {
 - Operaciones básicas: insertar, quitarPrimero y primero (enqueue, dequeue, first).
 - Todas las operaciones en O(1).
 
+Representación de una cola:
+
+![Queue representation](images/queue.jpg)
+
 ### Pseudocódigo
 
 ```pseudo
