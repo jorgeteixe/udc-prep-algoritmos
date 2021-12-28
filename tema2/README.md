@@ -464,10 +464,13 @@ int intcmp(const void *a, const void *b) {
   - `Buscar`: devuelve la posición del nodo con la clave buscada.
     ![Binary search tree search](images/binaryTreeSearch.jpeg)
   - `Insertar`: coloca una clave.
+    ![Binary search tree insert](images/binaryTreeInsert.jpeg)
   - `Eliminar`: borra una clave.
     - Si la clave está en una hoja, se elimina de inmediato.
     - Si el nodo tiene un hijo, se ajusta un puntero.
     - Si el nodo tiene 2 hijos, se sustituye la clave por la más pequeña del subárbol derecho.
+    ![Binary search tree delete case 1](images/binaryTreeDel1.jpeg)
+    ![Binary search tree delete case 2](images/binaryTreeDel2.jpeg)
 
 > Si se espera que se haya pocas eliminaciones, la *eliminación perezosa* (*lazy delete*) es una buena estrategia. Se marca el elemento como borrado pero no se elimina el nodo. Se puede llevar un contador de apariciones si se esperan claves duplicadas.
 
