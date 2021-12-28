@@ -584,3 +584,117 @@ procedimiento OrdenDeNivel (A)
     fin mientras
 fin procedimiento
 ```
+
+## Montículos
+
+### Características
+
+- Permiten únicamente el acceso al mínimo (o máximo) elemento.
+- Operaciones básicas: insertar y eliminarMin/Max.
+- Comparaciones simples:
+  - Listas enlazadas:
+    - Insercciones la frente. O(1)
+    - Eliminar recorriendo lista. O(n)
+  - Lista ordenada:
+    - Inserción costosa, hay que ponerlo en su sitio. O(n)
+    - Eliminaciones eficientes. O(1)
+  - Árboles binarios de búsqueda:
+    - Tiempo medio: O(log n)
+  - Montículos:
+    - Peor caso: O(log n)
+    - No requieren punteros.
+
+Un montículo es un **árbol binario completo**, es decir, todos los niveles están llenos a excepción del nivel más bajo, que se llena de izquierda a derecha.
+
+<!--
+```latex
+\text{Dado un arbol binario completo de altura h:}\\
+2^h \le  \text{n nodos} \le 2^{h+1}-1\\
+Altura = \vert log_2 n\vert
+```
+-->
+
+![Complete binary tree height](images/binaryTreeHeight.svg)
+
+Si estamos hablando de un montículo de mínimos, el mínimo del montículo siempre está en la raíz del árbol. Y como todo subárbol es también un montículo, todo nodo debe ser menor o igual que todos sus descendientes.
+
+Dado un nodo en posición i, se pueden saber fácilmente las posiciones de sus *familiares*:
+
+![Heap family positions](images/heapFamily.jpeg)
+
+Representación de un montículo en un array:
+
+![Heap family positions](images/heapArrayRepresentation.jpeg)
+
+### Pseudocódigo (máx.)
+
+```pseudo
+tipo Montículo = registro
+    Tamaño_monticulo : 0..Tamaño_máximo
+    Vector_montículo : vector [1..Tamaño_máximo] de Tipo_elemento
+fin registro
+
+procedimiento Inicializar_Montículo (M)
+    M.Tamaño_monticulo := 0
+fin procedimiento
+
+función Montículo_Vacío (M) : test
+    return M.Tamaño_montículo = 0
+fin función
+
+procedimiento Flotar (M, i) { privado }
+    mientras i > i y M.Vector_montículo[i div 2] < M.Vector_montículo[i] hacer
+        intercambiar M.Vector_montículo[i div 2] y M.Vector_montículo[i]
+        i := i div 2
+    fin mientras
+fin procedimiento
+
+procedimiento Insertar (x, M)
+    si M.Tamaño_monticulo = Tamaño_máximo entonces
+        error Montículo lleno
+    sino
+        M.Tamaño_montíulo := M.Tamaño_montículo + 1
+        M.Vector_montículo[M.Tamaño_montículo] := x
+        Flotar (M, M.Tamaño_montículo)
+fin procedimiento
+
+procedimiento Hundir (M, i) { privado }
+    repetir
+        HijoIzq := 2*i
+        HijoDer := 2*i + 1
+        j := i
+        si HijoDer <= M.Tamaño_montículo y M.Vector_monticulo[HijoDer] > M.Vector_montículo[i] entonces
+            i := HijoDer
+        si HijoIzq <= M.Tamaño_monticulo y M.Vector_monticulo[HijoIzq] > M.Vector_montículo[i] entonces
+            i := HijoIzq
+        intercambiar M.Vector_montículo[j] y M.Vector_montículo[i]
+    hasta j = i
+fin procedimiento
+
+función EliminarMax (M) : Tipo_elemento
+    si Montículo_Vacío(M) entonces
+        error Montículo vacío
+    sino
+        x := M.Vector_montículo[1]
+        M.Vector_montículo[1] := M.Vector_montículo[M.Tamaño_montículo]
+        si M.Tamaño_montículo > 0 entonces
+            Hundir (M, 1)
+        devolver x
+fin función
+
+/* CREACIÓN MONTÍCULOS EN TIEMPO LINEAL O(n) */
+procedimiento Crear_Montículo(V[1..n], M)
+    Copiar V en M.Vector_montículo
+    M.Tamaño_montículo := n
+    para i := M.tamaño_montículo div 2 hasta 1 paso -1
+        Hundir (M, i)
+    fin para
+fin procedimiento
+```
+
+El número de intercambios está acotado por la suma de las alturas de los nodos. Lo podemos demostrar marcando las aristas máximas que nos puede llevar hundir/flotar cada uno de los elementos (n/2, se empiza en n div 2).
+
+Aqui ejemplificamos como funciona el crear un montículo de mínimos desde un array ordenado descendentemente:
+
+![Create heap from array 1](images/heapCreateFromArr1.jpg)
+![Create heap from array 2](images/heapCreateFromArr2.jpg)
