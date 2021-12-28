@@ -698,3 +698,112 @@ Aqui ejemplificamos como funciona el crear un montículo de mínimos desde un ar
 
 ![Create heap from array 1](images/heapCreateFromArr1.jpg)
 ![Create heap from array 2](images/heapCreateFromArr2.jpg)
+
+## Tablas de dispersión (tablas hash)
+
+### Características
+
+- Objetivo: realizar inserciones, eliminaciones y búsquedas en tiempo promedio constante O(1)
+- Se usa para representar diccionarios, dada una clave se consigue su definición.
+- Estructura de datos ideal:
+  - Vector tamaño fijo N
+  - Función de dispersión (establece correspondencia de cada clave con un número entre 0 y N-1)
+  - Función fácil de calcular y que distribuya homogéneamente las claves.
+  - Decidir:
+    - Valor de N (número de celdas disponibles)
+    - Que hacer en caso de colisión (dos valores en la misma celda)
+
+> En las tablas de dispersión siempre es recomendable usar tamaños de la tabla primos.
+
+#### Dispersión abierta
+
+![Open hash table](images/hashOpen.jpeg)
+
+Pseudocódigo con lista enlazada:
+
+```pseudo
+tipo Índice = 0..N-1
+tipo Posición = ^Nodo
+tipo Lista = Posición
+tipo Nodo = registro
+    Elemento : TipoElemento
+    Siguiente : Posición
+fin registro
+tipo TablaDispersión = vector [Índice] de Lista
+
+procedimiento InicializarTabla (T)
+    para i := 0 hasta N-1 hacer
+        CrearLista(T[i])
+    fin para
+fin procedimiento
+
+función Buscar (Elem, Tabla) : Posición
+    i := Dispersión(Elem);
+    devolver BuscarEnLista(Elem, Tabla[i])
+fin función
+
+procedimiento Insertar (Elem, Tabla)
+    pos := Buscar(Elem, Tabla) { No inserta repetidos }
+    si pos = nil entonces
+        i := Dispersión(Elem)
+        InsertarEnLista(Elem, Tabla[i])
+fin procedimiento
+```
+
+![Open hash table](images/hashOpen.jpeg)
+
+#### Dispersión cerrada
+
+De este modo todos los datos se guardan en la tabla, no hay listas (infinitas, mientras haya memoria). La tabla tiene entonces que ser mas grande. Lo ideal es un factor de carga λ < 1/2.
+
+Las tablas con dispersión cerrada requieren eliminación perezosa (lazy delete) porque si borramos elementos, podemos no encontrar nunca otros que pasan a quedar fuera de sitio habiendo sitio antes.
+
+Pseudocódigo:
+
+```pseudo
+tipo ClaseDeEntrada = (legítima, vacía, eliminada)
+tipo Índice = 0..N-1
+tipo Posición = Índice
+tipo Entrada = registro
+    Elemento : TipoElemento
+    Información : ClaseDeEntrada
+fin registro
+tipo TablaDispersión = vector [Índice] de Entrada
+
+procedimiento InicializarTabla (D)
+    para i := hasta N-1 hacer
+        D[i].Información := vacía
+    fin para
+fin procedimiento
+
+/* Encuentra elementos legítimos o borrados */
+función Buscar (Elem, D) : Posición
+    i := 0
+    x := Dispersión(Elem)
+    PosActual := x
+    mientras D[PosActual].Información <> vacía y P[PosActual].Elemento <> Elem hacer
+        i := i + 1
+        PosActual := (x + FunResoluciónColisión(x, i)) mod N
+    fin mientras
+    devolver PosActual
+fin función
+
+procedimiento Insertar (Elem, D)
+    pos := Buscar(Elem, D)
+    si D[pos].Infromación <> legítima entonces
+        D[pos].Elemento := Elem
+        D[pos].Información := legítima
+fin procedimiento
+
+procedimiento Eliminar(Elem, D)
+    pos := Buscar(Elem, D)
+    si D[pos].información = legítima
+    entonces D[pos].Información := eliminada
+fin procedimiento
+```
+
+La implementación de `FunResoluciónColisión` puede ser:
+
+- Lineal: f(i) = i
+- Cuadrática: f(i) = i^2
+- Doble: f(i) = i * hash2(x)
