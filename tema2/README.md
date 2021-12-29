@@ -807,3 +807,38 @@ La implementación de `FunResoluciónColisión` puede ser:
 - Lineal: f(i) = i
 - Cuadrática: f(i) = i^2
 - Doble: f(i) = i * hash2(x)
+
+## Grafos
+
+Un grafo es un par G = (V, A)
+
+- **V** es el conjunto de *vértices* (o nodos).
+- **A** es el conjunto de *aristas*
+  - Cada arista es un par (v, w) ∈ V
+  - Si el par está ordenado, es un grafo dirigido.
+- Representaciones de grafos dirigidos:
+  - Matriz de adyacencia.
+  - Listas de adyacencia.
+
+![Graphs](images/graphs.jpeg)
+
+### Matriz de adyacencia
+
+- Matriz bidimensional (en el ejemplo llamada m)
+- Cada arista (u, v) se representa como m[u, v] = 1, que indica que hay una arista, si el contenido es 0, no la hay.
+- Si la arista tiene un peso asociado, se pone en m[u, v] el peso. Si no hay arista se usa una cifra muy grande o muy pequeña como centinela.
+- Requerimiento de espacio: θ(|V|^2)
+  - Adecuado para grafos densos
+  - Prohibitivo para grafos dispersos
+
+![Matrix graph](images/graphsMatrix.jpeg)
+
+### Listas de adyacencia
+
+- Para cada vértice metemos una lista con todos los vértices adyacentes.
+  - Vector de listas de adyacencia.
+- Requerimiento de espacio θ(|A| + |V|)
+  - Buena solución para grafos dispersos.
+- Si el grafo no es dirigido cada nodo aparecería duplicado.
+
+![List graph](images/graphList.jpeg)
