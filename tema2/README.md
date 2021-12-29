@@ -842,3 +842,121 @@ Un grafo es un par G = (V, A)
 - Si el grafo no es dirigido cada nodo aparecería duplicado.
 
 ![List graph](images/graphList.jpeg)
+
+## Conjuntos disjuntos
+
+- Los elementos se numeran de 1 a n.
+- Cada subconjunto tomará el nombre de uno de sus elementos, al que llamamos representante. Por ejemplo, el menor.
+- En un vector se guarda el nombre del subconjunto disjunto de cada elemento.
+
+![Disjoin sets](images/disjoinSets.jpeg)
+
+Operaciones:
+
+- `Búsqueda`: Devuelve el nombre del conjunto de un elemento.
+- `Unión`: Combina dos subconjuntos en un subconjunto nuevo. Destruyéndose los originales.
+
+### Pseudocódigo
+
+```pseudo
+tipo Elemento = entero
+tipo Conj = entero
+tipo ConjDisj = Vector [1..N] de entero
+
+función Buscar1 (C, x) : Conj
+    devolver C[x]
+fin función
+```
+
+La función Buscar1 es una simple consulta O(1). Lo que importa es que si, y sólo si, dos búsquedas a `x` e a `y` devuelven el mismo resultado, entonces están en el mismo conjunto.
+
+```pseudo
+procedimiento Unir1 (C, a, b)
+    i := min (C[a], C[b])
+    j := max (C[a], C[b])
+    para k := 1 hasta N hacer
+        si C[k] = j entonces C[k] := i
+    fin para
+fin procedimiento
+```
+
+La unión toma O(n). No importa de que conjunto unamos ya que lo recorremos todo. Una secuencia de n - 1 uniones (la máxima) tomaría O(n^2).
+
+La combinación de m búsquedas y n - 1 uniones toma O(m + n^2).
+
+### Usando árboles
+
+Utilizamos un árbol para caracterizar cada subconjunto.
+
+- La raíz nombra al subconjunto.
+- Fácil representación, puntero al padre.
+- p[*i*] nos devuelve el padre de *i*.
+- Si *i* es una raíz, p[*i*]=*i*.
+
+![Disjoin sets tree](images/disjointSetsTree.jpeg)
+
+```pseudo
+función Buscar2 (C, x) : Conj
+    r := x
+    mientras C[r] <> r hacer
+        r = c[r]
+    fin mientras
+    devolver r
+fin función
+```
+
+En una búsqueda sobre el elemento x, se devuelve la raíz del arbol que contiene x.
+La búsqueda de un elemento es proporcional a la profundidad del nodo x. En el peor caso puede ser O(n).
+
+```pseudo
+procedimiento Unir2 (C, raíz1, raíz2)
+{ supone que son raíces }
+    si raíz1 < raíz 2 entonces C[raíz2] := raiz1
+    sino C[raíz1] := raíz2
+fin procedimiento
+```
+
+La unión se efectúa combinando ambos árboles: la raíz de uno apunta a la raíz de otro. La unión toma O(1). La combinación de m búsquedas y n - 1 uniones ahora es O(m*n).
+
+![Disjoint sets union](images/disjointSetsUnionTree.jpeg)
+
+Una mejora sencilla es almacenar las alturas de los árboles y hacer del árbol menos profundo un subárbol del más profundo. La altura se incrementa, si y sólo si los dos árboles tienen el mismo tamaño.
+
+![Disjoint sets height](images/disjointSetsHeight.jpeg)
+
+```pseudo
+procedimiento Unir3 (C, A, raíz1, raíz2)
+    si A[raíz2] = A[raíz2] entonces
+        A[raíz1] := A[raíz1] + 1
+        C[raíz2] := raíz1
+    sino si A[raíz1] > A[raíz2] entonces
+        C[raíz2] := raíz1
+    sino
+        C[raíz1] := raíz2
+fin procedimiento
+```
+
+Haciendo esto la profundidad de cualquier nodo nunca es mayor que log2(n). Todo nodo está inicialmente en profundidad 0. Cuando se incrementa la profundidad, se coloca en un árbol del doble de grande. Con lo cual la profundidad aumenta log2(n) veces a lo sumo.
+
+De esta forma el tiempo de ejecución de una búsqueda es O(logn).
+Combinando m búsquedas y n - 1 uniones, O(m * log(n) + n).
+
+La compresión de caminos se ejecuta durante la búsqueda, cuando buscamos colocamos todos los nodos en el camino de x a la raíz en altura 1 (directamente con la raíz).
+
+```pseudo
+función Buscar3 (C, x) : Conj
+    r := x
+    mientras C[r] <> r hacer
+        r := C[r]
+    fin mientras
+    i := x
+    mientras i <> r hacer
+        j := C[i]
+        C[i] := r
+        i := j
+    fin mientras
+    devolver r
+fin función
+```
+
+![Compresión de caminos](images/disjointSetsCompression.jpeg)
