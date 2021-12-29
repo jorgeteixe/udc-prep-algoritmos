@@ -750,8 +750,6 @@ procedimiento Insertar (Elem, Tabla)
 fin procedimiento
 ```
 
-![Open hash table](images/hashOpen.jpeg)
-
 #### Dispersión cerrada
 
 De este modo todos los datos se guardan en la tabla, no hay listas (infinitas, mientras haya memoria). La tabla tiene entonces que ser mas grande. Lo ideal es un factor de carga λ < 1/2.
@@ -807,6 +805,8 @@ La implementación de `FunResoluciónColisión` puede ser:
 - Lineal: f(i) = i
 - Cuadrática: f(i) = i^2
 - Doble: f(i) = i * hash2(x)
+
+> // TODO: dibujo hash cerrado
 
 ## Grafos
 
