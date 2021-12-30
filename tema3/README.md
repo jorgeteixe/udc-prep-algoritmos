@@ -105,6 +105,8 @@ procedimiento Ordenación por montículos (var T[1..n])
 fin procedimiento
 ```
 
+> TODO: heapsort c implementation
+
 ### Ordenación por fusión
 
 ![Mergesort](images/mergeSort.jpeg)
