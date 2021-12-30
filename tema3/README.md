@@ -4,6 +4,8 @@
 
 ### Ordenación por inserción
 
+![Insertion sort](images/insertionSort.jpeg)
+
 Pseudocódigo:
 
 ```pseudo
@@ -38,6 +40,8 @@ void insertion_sort(int arr[], int n) {
 ```
 
 ### Ordenación Shell
+
+![Shell sort](images/shellSort.jpeg)
 
 Pseudocódigo
 
@@ -83,7 +87,11 @@ void shell_sort(int arr[], int n) {
 }
 ```
 
+![Shell increments](images/shellIncrements.jpeg)
+
 ### Ordenación por montículos
+
+![Heap sort](images/heapSort.jpeg)
 
 Pseudocódigo
 
@@ -98,6 +106,8 @@ fin procedimiento
 ```
 
 ### Ordenación por fusión
+
+![Mergesort](images/mergeSort.jpeg)
 
 Pseudocódigo
 
@@ -146,6 +156,12 @@ fin procedimiento
 
 ### Quicksort
 
+![Quicksort](images/quickSort.jpeg)
+
+![Quicksort duplicates](images/quickSortDuplicates.jpeg)
+
+![Quicksort analysis](images/quickSortAnalysis.jpeg)
+
 Pseudocódigo selección pivote *Mediana 3*
 
 ```pseudo
@@ -185,4 +201,52 @@ procedimiento Quicksort (var T[1..n])
     Qsort (T[1..n])
     Ordenación por Inserción (T[1..n])
 fin procedimiento
+```
+
+Implementación en C
+
+```c
+/* SELECCIÓN PIVOTE y INTERCAMBIAR */
+/* UTILIDADES INTERNAS ALGORITMOS */
+
+void intercambiar(int *x, int *y) {
+    int aux = *x;
+    *x = *y;
+    *y = aux;
+}
+
+void mediana3(int V[], int i, int j) {
+    int k = (i + j) / 2;
+    if (V[k] > V[j]) intercambiar(&V[k], &V[j]);
+    if (V[k] > V[i]) intercambiar(&V[k], &V[i]);
+    if (V[i] > V[j]) intercambiar(&V[i], &V[j]);
+}
+
+/* Quick Sort */
+
+void q_sort(int V[], int izq, int der) {
+    int pivote, i, j;
+    if (izq + UMBRAL <= der) {
+        mediana3(V, izq, der);
+        pivote = V[izq];
+        i = izq;
+        j = der;
+        do {
+            do { i++; } while (V[i] < pivote);
+            do { j--; } while (V[j] > pivote);
+            intercambiar(&V[i], &V[j]);
+        } while (j > i);
+        intercambiar(&V[i], &V[j]);
+        intercambiar(&V[izq], &V[j]);
+        q_sort(V, izq, j - 1);
+        q_sort(V, j + 1, der);
+    }
+}
+
+void quick_sort(int V[], int n) {
+    q_sort(V, 0, n - 1);
+    if (UMBRAL > 1) {
+        insertion_sort(V, n);
+    }
+}
 ```
