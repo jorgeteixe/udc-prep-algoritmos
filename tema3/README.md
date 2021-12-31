@@ -109,7 +109,7 @@ fin procedimiento
 Implementación C
 
 ```c
-void heapsort(int v[MAX_TAM]) {
+void heapsort(int v[]) {
     int i, tam;
     Monticulo m;
     Inicializar_Monticulo(&m);
