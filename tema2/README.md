@@ -643,7 +643,7 @@ función Montículo_Vacío (M) : test
 fin función
 
 procedimiento Flotar (M, i) { privado }
-    mientras i > i y M.Vector_montículo[i div 2] < M.Vector_montículo[i] hacer
+    mientras i > 1 y M.Vector_montículo[i div 2] < M.Vector_montículo[i] hacer
         intercambiar M.Vector_montículo[i div 2] y M.Vector_montículo[i]
         i := i div 2
     fin mientras
