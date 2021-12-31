@@ -109,12 +109,12 @@ fin procedimiento
 Implementación C
 
 ```c
-void heapsort(int v[]) {
+void heapsort(int v[], int n) {
     int i, tam;
     Monticulo m;
     
     Inicializar_Monticulo(&m);
-    Crear_Monticulo(v, &m);
+    Crear_Monticulo(v, n, &m);
     tam = m.tamano_monticulo;
 
     for (i = 0; i < tam; i++) {
