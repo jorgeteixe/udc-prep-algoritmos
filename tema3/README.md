@@ -106,7 +106,21 @@ procedimiento Ordenación por montículos (var T[1..n])
 fin procedimiento
 ```
 
-> TODO: heapsort c implementation
+Implementación C
+
+```c
+void heapsort(int v[MAX_TAM]) {
+    int i, tam;
+    Monticulo m;
+    Inicializar_Monticulo(&m);
+    Crear_Monticulo(v, &m);
+    tam = m.tamano_monticulo;
+
+    for (i = 0; i < tam; i++) {
+        v[tam - i - 1] = EliminarMax(&m);
+    }
+}
+```
 
 ### Ordenación por fusión
 
@@ -155,21 +169,7 @@ procedimiento Ordenación por Fusión (var T[1..n])
 fin procedimiento
 ```
 
-Implementación C
-
-```c
-void heapsort(int v[MAX_TAM]) {
-    int i, tam;
-    Monticulo m;
-    Inicializar_Monticulo(&m);
-    Crear_Monticulo(v, &m);
-    tam = m.tamano_monticulo;
-
-    for (i = 0; i < tam; i++) {
-        v[tam - i - 1] = EliminarMax(&m);
-    }
-}
-```
+> TODO: heapsort c implementation
 
 ### Quicksort
 
