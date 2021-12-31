@@ -112,6 +112,7 @@ Implementación C
 void heapsort(int v[]) {
     int i, tam;
     Monticulo m;
+    
     Inicializar_Monticulo(&m);
     Crear_Monticulo(v, &m);
     tam = m.tamano_monticulo;
