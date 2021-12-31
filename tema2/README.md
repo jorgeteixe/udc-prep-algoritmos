@@ -709,7 +709,7 @@ bool Monticulo_Vacio(Monticulo m);
 void Flotar(Monticulo *m, int i);
 void Insertar(int x, Monticulo *m);
 int EliminarMax(Monticulo *m);
-void Crear_Monticulo(const int vector_monticulo[MAX_TAM], Monticulo *m);
+void Crear_Monticulo(const int vector_monticulo[MAX_TAM], int n, Monticulo *m);
 
 /* ------ code ------- */
 #include <stdlib.h>
@@ -782,14 +782,14 @@ int EliminarMax(Monticulo *m) {
     return x;
 }
 
-void Crear_Monticulo(const int vector_monticulo[MAX_TAM], Monticulo *m) {
+void Crear_Monticulo(const int vector_monticulo[MAX_TAM], int n, Monticulo *m) {
     int i;
 
-    for (i = 0; vector_monticulo[i] > 0; i++) {
+    for (i = 0; i < n; i++) {
         m->vector_monticulo[i] = vector_monticulo[i];
     }
 
-    m->tamano_monticulo = i;
+    m->tamano_monticulo = n;
 
     for (i = m->tamano_monticulo / 2; i >= 0; i--) {
         Hundir(m, i);
