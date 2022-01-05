@@ -100,4 +100,56 @@ Reglas para marcar desde (0, 0):
 - Marcar *situación de victoria*: si existe un sucesor *situación de derrota*.
 - Marcar *situación de derrota*: si todos los sucesores son *situación de victoria*.
 
-// TODO: continue
+![Nim's game](images/nim.jpeg)
+
+```pseudo
+función ganarec(i, j)
+    para k := 1 hasta j hacer
+        si no ganarec(i - k, min (2k, i - k)) entonces
+            devolver verdadero
+    devolver falso
+```
+
+Este algoritmo tiene los mismos defectos que *fibrec* (y otros), calcula varias veces los mismos valores.
+
+Para solucionarlo podemos usar programación dinámica:
+
+```pseudo
+procedimiento ganadin(n)
+    G[0, 0] := falso
+    para i := 1 hasta n hacer
+        para j := 1 hasta i hacer
+            k := 1
+            mientras k < j y G[i - k, min(2k, i- k)] hacer
+                k := k + 1
+            G[i, j] := no G[i - k, 2k, i - k]
+```
+
+De esta otra forma lo que pasa es que calculamos de forma innecesaria algunos valores de la matriz (hay partes de la tabla que no nos hacen falta).
+
+Para mezclar las dos soluciones podemos usar lo que llamamos función con memoria:
+
+Inicializamos el vector *conocido*:
+
+```pseudo
+para i := 1 hasta n hacer
+    para j := 1 hasta i hacer
+        conocido[i, j] := falso
+```
+
+> Con escribir media matriz llega, por que no se pueden coger más palillos de los que hay en la mesa, es decir, *j* nunca es mayor que *i*.
+
+Determinamos si la situación es ganadora:
+
+```pseudo
+función nim(i, j)
+    si conocido[i, j] entonces
+        devolver G[i, j]
+    conocido[i, j] = verdadero
+    para k := 1 hasta j hacer
+        si no ganarec(i - k, min (2k, i - k)) entonces
+            G[i, j] := verdadero
+            devolver verdadero
+    G[i, j] := falso
+    devolver falso
+```
