@@ -153,3 +153,32 @@ función nim(i, j)
     G[i, j] := falso
     devolver falso
 ```
+
+## Las 8 reinas (Vuelta atrás / Backtracking)
+
+Recorrido implícito, se va recorriendo el grafo a medida que se va avanzando (pensemos en recorrido en profundidad).
+
+Ante una solución encontrada hay que decidir que hacer:
+
+- Seguir buscando soluciones
+  - A veces hay que tomar decisiones, puede haber más soluciones en este camino o ya no puede haber más...
+- Detenerse
+
+Si hay un fallo, se vuelve atrás y se intenta en el primer nodo que tenga vecinos sin explorar.
+
+```pseudo
+procedimiento reinas(k, col, diag45, diag135)
+    {
+        sol[1..k] es k-prometedor
+        col = {sol[i] | 1 <= i <= k}
+        diag45 = {sol[i] - i + 1 | 1 <= i <= k}
+        diag135 = {sol[i] + i - 1 | 1 <= i <= k}
+    }
+    si k = 8 entonces
+        escribir sol
+    sino
+        para j := 1 hasta 8 hacer
+            si j ∉ col y j - k ∉ diag45 y j + k ∉ diag135 entonces
+                sol[k + 1] := j
+                reinas(k + 1, col U {j}, diag45 U {j - k}, diag135 U {j + k})
+```
