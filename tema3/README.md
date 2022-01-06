@@ -58,8 +58,9 @@ procedimiento Ordenación de Shell (var T[1..n])
                 si tmp < T[j - incremento] entonces
                     T[j] := T[j-incremento]
                     j := j - incremento
-                sino seguir = falso
-            T[j] := timp
+                sino
+                    seguir = falso
+            T[j] := tmp
     hasta incremento = 1
 fin procedimiento
 ```
