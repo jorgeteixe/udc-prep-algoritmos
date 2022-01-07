@@ -926,7 +926,7 @@ Una mejora sencilla es almacenar las alturas de los árboles y hacer del árbol 
 
 ```pseudo
 procedimiento Unir3 (C, A, raíz1, raíz2)
-    si A[raíz2] = A[raíz2] entonces
+    si A[raíz1] = A[raíz2] entonces
         A[raíz1] := A[raíz1] + 1
         C[raíz2] := raíz1
     sino si A[raíz1] > A[raíz2] entonces
