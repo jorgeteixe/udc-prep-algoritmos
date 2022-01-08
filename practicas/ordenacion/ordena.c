@@ -15,7 +15,7 @@ int hibbard(int V[], int n) {
 
     for (i = 0; i <= 100; i++) {
         if (hib[i] > n) {
-            return (h[i - 1]);
+            return (hib[i - 1]);
         }
     }
 }
