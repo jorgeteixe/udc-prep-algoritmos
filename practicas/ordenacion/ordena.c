@@ -3,19 +3,26 @@
 
 /* HELPERS */
 
-void mediana3(int V[], int i, int j) {
+int mediana3(int V[], int i, int j) {
     int k = (i + j) / 2;
+
     if (V[k] > V[j]) intercambiar(&V[k], &V[j]);
     if (V[k] > V[i]) intercambiar(&V[k], &V[i]);
     if (V[i] > V[j]) intercambiar(&V[i], &V[j]);
+
+    return v[i];
+}
+
+void piv_aleatorio(int V[], int i, int j) {
+    return srand() % (j - i + 1);
 }
 
 void rapida(int V[], int izq, int der) {
     int pivote, i, j;
     if (izq + UMBRAL <= der) {
-        // CHANGEME: si se pide cambiar la selección de pivote
-        mediana3(V, izq, der);
-        pivote = V[izq];
+        // pivote = piv_aleatorio(V, izq, der); // <- pivote aleatorio
+        // pivote = V[izq]; // <- primer valor del vector
+        pivote = mediana3(V, izq, der);
         i = izq;
         j = der;
         do {
