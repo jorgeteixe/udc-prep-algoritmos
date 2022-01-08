@@ -112,7 +112,7 @@ void tiempos(algoritmo_ordenacion ordena, algoritmo_rellena rellena) {
     int i;
     int filas = 7;
     int primer_n = 500;
-    int boost = INT8_MAX;
+    int boost = 10;
     int ns[filas];
     double ts[filas];
     double inferior[filas];
@@ -123,15 +123,17 @@ void tiempos(algoritmo_ordenacion ordena, algoritmo_rellena rellena) {
     // Generamos las longitudes que vamos a usar para los arrays, la columa n
     generar_ns(ns, filas, primer_n);
 
-    // Cargamos el proceso de trabajo para obtener mejores resultados
-    while (boost-- != 0) {
-        boost++;
-        boost--;
-    }
 
     // calculamos los tiempos que nos lleva cada fila, la columna t(n)
     // - reusamos el mismo vector, de tamaño de la última fila
     v = malloc(sizeof (int) * ns[filas - 1]);
+
+    // Cargamos el proceso de trabajo para obtener mejores resultados
+    while (boost-- != 0) {
+        rellena.f(v, ns[filas / 2]);
+        ordena.f(v, ns[filas / 2]);
+    }
+
     for (i = 0; i < filas; i++) {
         ts[i] = tiempo(ordena, rellena, ns[i], v);
     }
