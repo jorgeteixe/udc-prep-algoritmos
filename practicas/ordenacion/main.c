@@ -152,15 +152,15 @@ void tiempos(algoritmo_ordenacion ordena, algoritmo_rellena rellena) {
 }
 
 double finferior(int n, double t) {
-    return t / pow(n, 1.8);
+    return t / log2(n);
 }
 
 double facotada(int n, double t) {
-    return t / pow(n, 2.0);
+    return t / (n * log2(n));
 }
 
 double fsuperior(int n, double t) {
-    return t / pow(n, 2.2);
+    return t / pow(n, 2);
 }
 
 int main() {
@@ -170,19 +170,19 @@ int main() {
     cota acotada;
     cota superior;
 
-    ordena.nombre = "inserción";
-    ordena.f = ordena_insercion;
+    ordena.nombre = "rápida";
+    ordena.f = ordena_rapida;
 
     rellena.nombre = "aleatorio";
     rellena.f = rellena_aleatorio;
 
-    inferior.nombre = "t(n)/n^1.8";
+    inferior.nombre = "t(n)/logn";
     inferior.f = finferior;
 
-    acotada.nombre = "t(n)/n^2";
+    acotada.nombre = "t(n)/nlogn";
     acotada.f = facotada;
 
-    superior.nombre = "t(n)/n^2.2";
+    superior.nombre = "t(n)/n^2";
     superior.f = fsuperior;
 
     // unimos cotas con algoritmo
