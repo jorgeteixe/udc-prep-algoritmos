@@ -13,6 +13,7 @@ void mediana3(int V[], int i, int j) {
 void rapida(int V[], int izq, int der) {
     int pivote, i, j;
     if (izq + UMBRAL <= der) {
+        // CHANGEME: si se pide cambiar la selección de pivote
         mediana3(V, izq, der);
         pivote = V[izq];
         i = izq;
@@ -95,6 +96,7 @@ void ordena_seleccion(int v[], int n) {
 void ordena_shell(int v[], int n) {
     int incremento = n, tmp, seguir, j, i;
     do {
+        // CHANGEME: si se pide cambiar los incrementos
         incremento = incremento / 2;
         for (i = incremento; i < n; i++) {
             tmp = v[i];
