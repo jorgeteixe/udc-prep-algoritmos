@@ -171,57 +171,51 @@ fin procedimiento
 ```
 
 ```c
-void merge(int v[], int izq, int dch, int centro) {
+void fusion(int v[], int izq, int dch, int centro) {
     int aux_tam = dch - izq + 1;
+    int aux[aux_tam];
     int i = izq;
     int j = centro + 1;
     int k = izq;
-    int aux[aux_tam];
-
     while (i <= centro && j <= dch) {
         if (v[i] <= v[j]) {
-            aux[k] = v[i];
+            aux[izq - k] = v[i];
             i++;
         } else {
-            aux[k] = v[j];
+            aux[izq - k] = v[j];
             j++;
         }
         k++;
     }
-
     while (i <= centro) {
-        aux[k] = v[j];
+        aux[izq - k] = v[i];
         i++;
         k++;
     }
-
     while (j <= dch) {
-        aux[k] = v[j];
+        aux[izq - k] = v[j];
         j++;
         k++;
     }
-
     for (k = izq; k <= dch; k++) {
-        v[k] = aux[k];
+        v[k] = aux[izq - k];
     }
 }
 
-void recursive_mergesort(int v[], int izq, int dch) {
+void fusion_recursivo(int v[], int izq, int dch) {
     int centro;
-
-    if (izq + UMBRAL <= dch) {
+    if (izq + UMBRAL < dch) {
         centro = (izq + dch) / 2;
-        recursive_mergesort(v, izq, centro);
-        recursive_mergesort(v, centro + 1, dch);
-        merge(v, izq, dch, centro);
+        fusion_recursivo(v, izq, centro);
+        fusion_recursivo(v, centro + 1, dch);
+        fusion(v, izq, dch, centro);
     } else {
-        ord_ins(v, izq, dch, dch - izq + 1);
+        ordena_insercion(v + izq, dch - izq + 1);
     }
-
 }
 
-void mergesort(int v[], int n) {
-    recursive_mergesort(v, 0, n - 1);
+void ordena_fusion(int v[], int n) {
+    fusion_recursivo(v, 0, n - 1);
 }
 ```
 
