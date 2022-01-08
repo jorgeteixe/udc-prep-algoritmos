@@ -106,7 +106,22 @@ procedimiento Ordenación por montículos (var T[1..n])
 fin procedimiento
 ```
 
-> TODO: heapsort c implementation
+Implementación C
+
+```c
+void heapsort(int v[], int n) {
+    int i, tam;
+    Monticulo m;
+    
+    Inicializar_Monticulo(&m);
+    Crear_Monticulo(v, n, &m);
+    tam = m.tamano_monticulo;
+
+    for (i = 0; i < tam; i++) {
+        v[tam - i - 1] = EliminarMax(&m);
+    }
+}
+```
 
 ### Ordenación por fusión
 
@@ -155,7 +170,54 @@ procedimiento Ordenación por Fusión (var T[1..n])
 fin procedimiento
 ```
 
-> TODO: mergesort c implementation
+```c
+void fusion(int v[], int izq, int dch, int centro) {
+    int aux_tam = dch - izq + 1;
+    int aux[aux_tam];
+    int i = izq;
+    int j = centro + 1;
+    int k = izq;
+    while (i <= centro && j <= dch) {
+        if (v[i] <= v[j]) {
+            aux[izq - k] = v[i];
+            i++;
+        } else {
+            aux[izq - k] = v[j];
+            j++;
+        }
+        k++;
+    }
+    while (i <= centro) {
+        aux[izq - k] = v[i];
+        i++;
+        k++;
+    }
+    while (j <= dch) {
+        aux[izq - k] = v[j];
+        j++;
+        k++;
+    }
+    for (k = izq; k <= dch; k++) {
+        v[k] = aux[izq - k];
+    }
+}
+
+void fusion_recursivo(int v[], int izq, int dch) {
+    int centro;
+    if (izq + UMBRAL < dch) {
+        centro = (izq + dch) / 2;
+        fusion_recursivo(v, izq, centro);
+        fusion_recursivo(v, centro + 1, dch);
+        fusion(v, izq, dch, centro);
+    } else {
+        ordena_insercion(v + izq, dch - izq + 1);
+    }
+}
+
+void ordena_fusion(int v[], int n) {
+    fusion_recursivo(v, 0, n - 1);
+}
+```
 
 ### Quicksort
 
