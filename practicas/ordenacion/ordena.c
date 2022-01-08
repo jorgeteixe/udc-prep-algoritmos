@@ -15,9 +15,11 @@ int hibbard(int V[], int n) {
 
     for (i = 0; i <= 100; i++) {
         if (hib[i] > n) {
-            return (hib[i - 1]);
+            break;
         }
     }
+
+    return (hib[i - 1]);
 }
 
 int mediana3(int V[], int i, int j) {
