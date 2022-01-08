@@ -53,9 +53,10 @@ Preparation for Algorithms exam.
   - [Euclides](libro/capitulo4/122-Euclides.md)
   - [Hanoi](libro/capitulo4/124-Hanoi.md)
   - [contar](libro/capitulo4/128-contar.md)
-- Capítulo 5: [Estructuras de datos](./libro/capitulo5)
-- Capítulo 6: [Algoritmos voraces](./libro/capitulo6)
-- Capítulo 7: [Divide y vencerás](./libro/capitulo7)
-- Capítulo 8: [Programación dinámica](./libro/capitulo8)
-- Capítulo 9: [Exploración de grafos](./libro/capitulo9)
-- Capítulo 12: [Complejidad computacional](./libro/capitulo12)
+- DE AQUI PARA ABAJO SE ME QUITARON LAS GANAS DE COPIARLOS
+- Capítulo 5: Estructuras de datos
+- Capítulo 6: Algoritmos voraces
+- Capítulo 7: Divide y vencerás
+- Capítulo 8: Programación dinámica
+- Capítulo 9: Exploración de grafos
+- Capítulo 12: Complejidad computacional
