@@ -3,6 +3,23 @@
 
 /* HELPERS */
 
+int hibbard(int V[], int n) {
+    int i = 1;
+    int hib[100];
+    hib[0] = 1;
+
+    while (i < 100) {
+        hib[i] = i * 2 + 1;
+        i++;
+    }
+
+    for (i = 0; i <= 100; i++) {
+        if (hib[i] > n) {
+            return (h[i - 1]);
+        }
+    }
+}
+
 int mediana3(int V[], int i, int j) {
     int k = (i + j) / 2;
 
@@ -10,11 +27,11 @@ int mediana3(int V[], int i, int j) {
     if (V[k] > V[i]) intercambiar(&V[k], &V[i]);
     if (V[i] > V[j]) intercambiar(&V[i], &V[j]);
 
-    return v[i];
+    return V[i];
 }
 
-void piv_aleatorio(int V[], int i, int j) {
-    return srand() % (j - i + 1);
+int piv_aleatorio(int V[], int i, int j) {
+    return (rand() % (j - i + 1));
 }
 
 void rapida(int V[], int izq, int der) {
@@ -81,7 +98,6 @@ void fusion_recursivo(int v[], int izq, int dch) {
 }
 
 
-
 /* ALGORITMOS ORDENACIÓN */
 
 void ordena_seleccion(int v[], int n) {
@@ -101,7 +117,9 @@ void ordena_seleccion(int v[], int n) {
 }
 
 void ordena_shell(int v[], int n) {
-    int incremento = n, tmp, seguir, j, i;
+    int incremento = n; // incremento por defecto
+    // int incremento = hibbard(v, n); // incremento Hibbard
+    int tmp, seguir, j, i;
     do {
         // CHANGEME: si se pide cambiar los incrementos
         incremento = incremento / 2;
