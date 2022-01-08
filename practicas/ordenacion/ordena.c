@@ -1,25 +1,14 @@
+#include <math.h>
 #include "ordena.h"
 
 
 /* HELPERS */
 
 int hibbard(int V[], int n) {
-    int i = 1;
-    int hib[100];
-    hib[0] = 1;
+    int val = log(n + 1) / log(2);
+    int increment = (pow(2, (val))) - 1;
 
-    while (i < 100) {
-        hib[i] = i * 2 + 1;
-        i++;
-    }
-
-    for (i = 0; i <= 100; i++) {
-        if (hib[i] > n) {
-            break;
-        }
-    }
-
-    return (hib[i - 1]);
+    return increment;
 }
 
 int mediana3(int V[], int i, int j) {
