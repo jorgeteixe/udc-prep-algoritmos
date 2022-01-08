@@ -112,6 +112,7 @@ void tiempos(algoritmo_ordenacion ordena, algoritmo_rellena rellena) {
     int i;
     int filas = 7;
     int primer_n = 500;
+    int boost = INT8_MAX;
     int ns[filas];
     double ts[filas];
     double inferior[filas];
@@ -123,9 +124,9 @@ void tiempos(algoritmo_ordenacion ordena, algoritmo_rellena rellena) {
     generar_ns(ns, filas, primer_n);
 
     // Cargamos el proceso de trabajo para obtener mejores resultados
-    int boost = 100;
     while (boost-- != 0) {
-        
+        boost++;
+        boost--;
     }
 
     // calculamos los tiempos que nos lleva cada fila, la columna t(n)
