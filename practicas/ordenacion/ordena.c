@@ -108,11 +108,10 @@ void ordena_seleccion(int v[], int n) {
 }
 
 void ordena_shell(int v[], int n) {
-    int incremento = n; // incremento por defecto
-    // int incremento = hibbard(v, n); // incremento Hibbard
     int tmp, seguir, j, i;
+    //int incremento = n; // incremento por defecto
+    int incremento = hibbard(v, n); // incremento Hibbard
     do {
-        // CHANGEME: si se pide cambiar los incrementos
         incremento = incremento / 2;
         for (i = incremento; i < n; i++) {
             tmp = v[i];
