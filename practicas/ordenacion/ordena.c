@@ -1,21 +1,31 @@
+#include <math.h>
 #include "ordena.h"
 
 
 /* HELPERS */
 
-void mediana3(int V[], int i, int j) {
+int hibbard(int V[], int n) {
+    int val = (int) (log(n + 1) / log(2));
+    int increment = (int) pow(2, (val)) - 1;
+
+    return increment;
+}
+
+int mediana3(int V[], int i, int j) {
     int k = (i + j) / 2;
+
     if (V[k] > V[j]) intercambiar(&V[k], &V[j]);
     if (V[k] > V[i]) intercambiar(&V[k], &V[i]);
     if (V[i] > V[j]) intercambiar(&V[i], &V[j]);
+
+    return V[i];
 }
+
 
 void rapida(int V[], int izq, int der) {
     int pivote, i, j;
     if (izq + UMBRAL <= der) {
-        // CHANGEME: si se pide cambiar la selección de pivote
-        mediana3(V, izq, der);
-        pivote = V[izq];
+        pivote = mediana3(V, izq, der);
         i = izq;
         j = der;
         do {
@@ -74,7 +84,6 @@ void fusion_recursivo(int v[], int izq, int dch) {
 }
 
 
-
 /* ALGORITMOS ORDENACIÓN */
 
 void ordena_seleccion(int v[], int n) {
@@ -94,9 +103,10 @@ void ordena_seleccion(int v[], int n) {
 }
 
 void ordena_shell(int v[], int n) {
-    int incremento = n, tmp, seguir, j, i;
+    int tmp, seguir, j, i;
+    //int incremento = n; // incremento por defecto
+    int incremento = hibbard(v, n); // incremento Hibbard
     do {
-        // CHANGEME: si se pide cambiar los incrementos
         incremento = incremento / 2;
         for (i = incremento; i < n; i++) {
             tmp = v[i];

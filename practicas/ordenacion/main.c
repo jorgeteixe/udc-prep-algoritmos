@@ -152,7 +152,7 @@ void tiempos(algoritmo_ordenacion ordena, algoritmo_rellena rellena) {
 }
 
 double finferior(int n, double t) {
-    return t / log2(n);
+    return t / log(n);
 }
 
 double facotada(int n, double t) {
@@ -170,8 +170,8 @@ int main() {
     cota acotada;
     cota superior;
 
-    ordena.nombre = "rápida";
-    ordena.f = ordena_rapida;
+    ordena.nombre = "shell";
+    ordena.f = ordena_shell;
 
     rellena.nombre = "aleatorio";
     rellena.f = rellena_aleatorio;
