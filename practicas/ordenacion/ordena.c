@@ -5,8 +5,8 @@
 /* HELPERS */
 
 int hibbard(int V[], int n) {
-    int val = log(n + 1) / log(2);
-    int increment = (pow(2, (val))) - 1;
+    int val = (int) (log(n + 1) / log(2));
+    int increment = (int) pow(2, (val)) - 1;
 
     return increment;
 }
@@ -21,15 +21,10 @@ int mediana3(int V[], int i, int j) {
     return V[i];
 }
 
-int piv_aleatorio(int V[], int i, int j) {
-    return (rand() % (j - i + 1));
-}
 
 void rapida(int V[], int izq, int der) {
     int pivote, i, j;
     if (izq + UMBRAL <= der) {
-        // pivote = piv_aleatorio(V, izq, der); // <- pivote aleatorio
-        // pivote = V[izq]; // <- primer valor del vector
         pivote = mediana3(V, izq, der);
         i = izq;
         j = der;
