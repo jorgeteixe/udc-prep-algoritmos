@@ -257,7 +257,7 @@ procedimiento Qsort (var T[i..j])
             intercambiar T[k] y T[m]
         hasta m <= k
         intercambiar T[k] y T[m] { deshacer último intercambio }
-        intercambiar T[j] y T[j - 1] { colocar pivote }
+        intercambiar T[k] y T[j - 1] { colocar pivote }
         Qsort (T[i..j - 1])
         Qsort (T[k + 1..j])
 fin procedimiento
