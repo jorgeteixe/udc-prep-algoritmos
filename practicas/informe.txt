@@ -1,0 +1,40 @@
+Jorge Teixeira Crespo - jorge.teixeira
+
+Grupo: 4.1
+
+-----------
+  INFORME
+-----------
+
+El siguiente estudio consiste en el análisis de la complejidad del
+algoritmo que // FIXME: hace XXX en C:
+    - // FIXME: nombre algoritmo
+
+Calculamos sus tiempos de ejecución con /* FIXME: inicializaciones */,
+de esta forma obtendremos conclusiones acerca de su eficiencia.
+
+[+] Características de la máquina:
+    [-] CPU Apple M1 @ 3.2 GHz x (4 + 4) núcleos
+    [-] Memoria RAM 8GB
+    [-] Disco duro SSD de 256 GB
+    [-] GPU integrada M1 8 núcleos
+    [-] Sistema operativo: macOS Big Sur 11.5
+
+[+] Unidades de tiempo:
+    [-] La unidad de tiempo empleada es el Microsegundo
+    [-] Umbral de confianza: 500*10^-6 s [microsegundos]
+
+[+] Tiempos de ejecución:
+
+    (*) --> Tiempo promedio(μs) de 1000 iteraciones de los algoritmos.
+
+// FIXME: TABLA AQUI MAKINA Q VAS A SACAR UN 10
+
+ - Cota subestimada:  n^1.8   |   t(n)/n^1.6  → ∞ (diverge) cuando n → ∞
+ - Cota ajustada:     n^2     |   t(n)/n^2      cte: // FIXME: poner constante
+ - Cota sobrestimada: n^2.2   |   t(n)/n^2.2  → 0 (decrece) cuando n → ∞
+
+
+[+] Conclusiones:
+
+// FIXME: poner conclusiones

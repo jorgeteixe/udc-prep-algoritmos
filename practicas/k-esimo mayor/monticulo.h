@@ -3,7 +3,7 @@
 
 #include "util.h"
 
-#define MAX_TAM 32000
+#define MAX_TAM 256000
 
 typedef struct Monticulo {
     int tamano_monticulo;

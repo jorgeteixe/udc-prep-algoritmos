@@ -19,12 +19,20 @@ void test(algoritmo algo) {
     int n = 10, r, i, k = 3;
     int *v = malloc(sizeof (int) * n);
 
+    // EJ 3
     for (i = 0; i < 10; i++) {
         rellena_aleatorio(v, n);
         r = algo.f(v, n, k);
         listar_vector(v, n);
         ordena_insercion(v, n);
         printf("¿%d = %d? %s\n\n", r, v[n - k], r == v[n - k] ? "Si." : "No.");
+    }
+
+    // EJ 4
+    rellena_ascendente(v, 500);
+    for (i = 1; i <= 500; i += 50) {
+        r = algo.f(v, 500, i);
+        printf("¿%d = %d? %s\n", r, 500 - i, r == 500 - i ? "Si." : "No.");
     }
 
     free(v);
@@ -44,7 +52,10 @@ double tiempo(algoritmo algo, int n, int *v) {
     // medición normal
     rellena_aleatorio(v, n);
     ta = microsegundos();
-    algo.f(v, n, 5);
+    // 5 a
+    //algo.f(v, n, 5);
+    // 5 b
+    algo.f(v, n, n / 2);
     tb = microsegundos();
     t = tb - ta;
 
@@ -53,7 +64,10 @@ double tiempo(algoritmo algo, int n, int *v) {
         ta = microsegundos();
         for (i = 0; i < k; ++i) {
             rellena_aleatorio(v, n);
-            algo.f(v, n, 5);
+            // 5 a
+            //algo.f(v, n, 5);
+            // 5 b
+            algo.f(v, n, n / 2);
         }
         tb = microsegundos();
         t1 = tb - ta;
@@ -89,7 +103,7 @@ void imprimir_tabla(int ns[], double ts[], double inf[], double aco[],
 
 void tiempos(algoritmo algo) {
     int i;
-    int filas = 7;
+    int filas = 10;
     int primer_n = 500;
     int boost = 10;
     int ns[filas];
@@ -130,15 +144,15 @@ void tiempos(algoritmo algo) {
 }
 
 double finferior(int n, double t) {
-    return t / pow(n, 1.8);
+    return t / log2(n);
 }
 
 double facotada(int n, double t) {
-    return t / pow(n, 2);
+    return t / (n * log2(n));
 }
 
 double fsuperior(int n, double t) {
-    return t / pow(n, 2.2);
+    return t / pow(n, 2);
 }
 
 int main() {
@@ -150,20 +164,19 @@ int main() {
     algo.nombre = "k-ésimo mayor";
     algo.f = kesimo_mayor;
 
-    inferior.nombre = "t(n)/n^1.8";
+    inferior.nombre = "t(n)/logn";
     inferior.f = finferior;
 
-    acotada.nombre = "t(n)/n^2";
+    acotada.nombre = "t(n)/nlogn";
     acotada.f = facotada;
 
-    superior.nombre = "t(n)/n^2.2";
+    superior.nombre = "t(n)/n^2";
     superior.f = fsuperior;
 
     // unimos cotas con algoritmo
     algo.cota_inferior = inferior;
     algo.cota_acotada = acotada;
     algo.cota_superior = superior;
-
 
     test(algo);
 
