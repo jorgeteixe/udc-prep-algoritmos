@@ -9,7 +9,7 @@ typedef struct cota {
 
 typedef struct algoritmo {
     char* nombre;
-    void (*f)(matriz m, int n, cola* aristas);
+    void (*f)(matriz m, int n, int *minimo);
     cota cota_inferior;
     cota cota_acotada;
     cota cota_superior;
@@ -23,15 +23,14 @@ void generar_ns(int ns[], int filas, int primer_n) {
     }
 }
 
-double tiempo(algoritmo ordena, int n, matriz m) {
+double tiempo(algoritmo algo, int n, matriz m, int minimos[]) {
     int i, k = 1000;
     double ta, tb, t1, t2, t;
-    cola c;
 
     // medición normal
     inicializar_matriz(m, n);
     ta = microsegundos();
-    prim(m, n, &c);
+    algo.f(m, n, minimos);
     tb = microsegundos();
     t = tb - ta;
 
@@ -40,7 +39,7 @@ double tiempo(algoritmo ordena, int n, matriz m) {
         ta = microsegundos();
         for (i = 0; i < k; ++i) {
             inicializar_matriz(m, n);
-            prim(m, n, &c);
+            algo.f(m, n, minimos);
         }
         tb = microsegundos();
         t1 = tb - ta;
@@ -59,7 +58,7 @@ void imprimir_tabla(int ns[], double ts[], double inf[], double aco[],
                     double sup[], int filas,
                     algoritmo ordena) {
     int i;
-    printf("[+] Árbol recubrimiento mínimo: %s.\n", ordena.nombre);
+    printf("[+] Caminos mínimos: %s.\n", ordena.nombre);
     printf("%10s%15s%15s%15s%15s\n", "n", "t(n)", ordena.cota_inferior.nombre,
             ordena.cota_acotada.nombre, ordena.cota_superior.nombre);
 
@@ -85,6 +84,7 @@ void tiempos(algoritmo ordena) {
     double acotada[filas];
     double superior[filas];
     matriz m;
+    int *minimos = malloc(sizeof (int) * ns[filas - 1]);
 
     // Generamos las longitudes que vamos a usar para los arrays, la columa n
     generar_ns(ns, filas, primer_n);
@@ -100,10 +100,11 @@ void tiempos(algoritmo ordena) {
     }
 
     for (i = 0; i < filas; i++) {
-        ts[i] = tiempo(ordena, ns[i], m);
+        ts[i] = tiempo(ordena, ns[i], m, minimos);
     }
     
     liberar_matriz(m, ns[filas - 1]);
+    free(minimos);
 
     // aplicamos las cotas a los tiempos
     for (i = 0; i < filas; i++) {
@@ -128,62 +129,42 @@ double fsuperior(int n, double t) {
     return t / pow(n, 2.2);
 }
 
-void test(algoritmo algo, int n, matriz m) {
-    cola c;
-    crear_cola(&c);
-    algo.f(m, n, &c);
+void test(algoritmo algo, int n, matriz m, int *minimos) {
+    algo.f(m, n, minimos);
     print_matrix(m, n);
-    mostrar_cola(c);
+    listar_vector(minimos, n);
 }
 
 void test1(algoritmo algo) {
-    int n = 5;
-    matriz m = crear_matriz(5);
-    m[0][0] = 0; m[0][1] = 1; m[0][2] = 8; m[0][3] = 4; m[0][4] = 7;
-    m[1][0] = 1; m[1][1] = 0; m[1][2] = 2; m[1][3] = 6; m[1][4] = 5;
-    m[2][0] = 8; m[2][1] = 2; m[2][2] = 0; m[2][3] = 9; m[2][4] = 5;
-    m[3][0] = 4; m[3][1] = 6; m[3][2] = 9; m[3][3] = 0; m[3][4] = 3;
-    m[4][0] = 7; m[4][1] = 5; m[4][2] = 5; m[4][3] = 3; m[4][4] = 0;
-    test(algo, n, m);
+    int n = 8;
+    matriz m = crear_matriz(n);
+    int *minimos = malloc(sizeof (int) * n);
+    m[0][0] = INFINITO; m[0][1] = 5; m[0][2] = 2; m[0][3] = INFINITO;
+    m[0][4] = INFINITO; m[0][5] = INFINITO; m[0][6] = INFINITO;
+    m[0][7] = INFINITO; m[1][0] = INFINITO; m[1][1] = INFINITO;
+    m[1][2] = INFINITO; m[1][3] = INFINITO; m[1][4] = INFINITO;
+    m[1][5] = INFINITO; m[1][6] = 2; m[1][7] = INFINITO;
+    m[2][0] = INFINITO; m[2][1] = 3; m[2][2] = INFINITO; m[2][3] = 4;
+    m[2][4] = 2; m[2][5] = INFINITO; m[2][6] = 1; m[2][7] = INFINITO;
+    m[3][0] = INFINITO; m[3][1] = INFINITO; m[3][2] = INFINITO;
+    m[3][3] = INFINITO; m[3][4] = 3; m[3][5] = INFINITO;
+    m[3][6] = INFINITO; m[3][7] = 1;  m[4][0] = INFINITO; m[4][1] = INFINITO;
+    m[4][2] = INFINITO; m[4][3] = INFINITO; m[4][4] = INFINITO; m[4][5] = 2;
+    m[4][6] = INFINITO; m[4][7] = 1; m[5][0] = INFINITO; m[5][1] = INFINITO;
+    m[5][2] = INFINITO; m[5][3] = INFINITO; m[5][4] = INFINITO;
+    m[5][5] = INFINITO; m[5][6] = INFINITO; m[5][7] = INFINITO;
+    m[6][0] = INFINITO; m[6][1] = INFINITO; m[6][2] = INFINITO; 
+    m[6][3] = INFINITO; m[6][4] = 1; m[6][5] = 4; m[6][6] = INFINITO;
+    m[6][7] = INFINITO; m[7][0] = INFINITO; m[7][1] = INFINITO;
+    m[7][2] = INFINITO; m[7][3] = INFINITO; m[7][4] = INFINITO; m[7][5] = 2;
+    m[7][6] = INFINITO; m[7][7] = INFINITO;
+    test(algo, n, m, minimos);
     liberar_matriz(m, n);
-}
-
-void test2(algoritmo algo) {
-    int n = 4;
-    matriz m = crear_matriz(4);
-    m[0][0] = 0; m[0][1] = 1; m[0][2] = 4; m[0][3] = 7;
-    m[1][0] = 1; m[1][1] = 0; m[1][2] = 2; m[1][3] = 8;
-    m[2][0] = 4; m[2][1] = 2; m[2][2] = 0; m[2][3] = 3;
-    m[3][0] = 7; m[3][1] = 8; m[3][2] = 3; m[3][3] = 0;
-    test(algo, n, m);
-    liberar_matriz(m, n);
-}
-
-void test3(algoritmo algo) {
-    int n = 7;
-    matriz m = crear_matriz(7);
-    m[0][0] = 0; m[0][1] = 7; m[0][2] = INFINITO;
-    m[0][3] = 5; m[0][4] = INFINITO; m[0][5] = INFINITO; m[0][6] = INFINITO;
-    m[1][0] = 7; m[1][1] = 0; m[1][2] = 8;
-    m[1][3] = 9; m[1][4] = 7; m[1][5] = INFINITO; m[1][6] = INFINITO;
-    m[2][0] = INFINITO; m[2][1] = 8; m[2][2] = 0;
-    m[2][3] = INFINITO; m[2][4] = 5; m[2][5] = INFINITO; m[2][6] = INFINITO;
-    m[3][0] = 5; m[3][1] = 9; m[3][2] = INFINITO;
-    m[3][3] = 0; m[3][4] = 15; m[3][5] = 6; m[3][6] = INFINITO;
-    m[4][0] = INFINITO; m[4][1] = 7; m[4][2] = 5;
-    m[4][3] = 15; m[4][4] = 0; m[4][5] = 8; m[4][6] = 9;
-    m[5][0] = INFINITO; m[5][1] = INFINITO; m[5][2] = INFINITO;
-    m[5][3] = 6; m[5][4] = 8; m[5][5] = 0; m[5][6] = 11;
-    m[6][0] = INFINITO; m[6][1] = INFINITO; m[6][2] = INFINITO;
-    m[6][3] = INFINITO; m[6][4] = 9; m[6][5] = 11; m[6][6] = 0;
-    test(algo, n, m);
-    liberar_matriz(m, n);
+    free(minimos);
 }
 
 void tests(algoritmo algo) {
     test1(algo);
-    test2(algo);
-    test3(algo);
 }
 
 int main() {
@@ -192,8 +173,8 @@ int main() {
     cota acotada;
     cota superior;
 
-    algo.nombre = "Prim";
-    algo.f = prim;
+    algo.nombre = "Dijkstra";
+    algo.f = dijkstra_normal;
 
     inferior.nombre = "t(n)/n^1.8";
     inferior.f = finferior;
