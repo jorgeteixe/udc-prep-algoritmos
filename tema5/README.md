@@ -93,6 +93,19 @@ función binomial (n, k)
     devolver C[n, k]
 ```
 
+Pseudocódigo usando array (en vez de necesitar n*k de espacio solo necesita k, la complejidad es la misma):
+
+```pseudo
+función binomial (n, k)
+    C[0..k] := [0]
+    C[0] := 1
+
+    para i := 1 hasta n
+        para j := k hasta 1 paso -1
+            C[j] := C[j] + C[j-1]
+    devolver C[k] 
+```
+
 ### Devolver el cambio
 
 El algoritmo voraz es eficiente pero no funciona siempre, dependiendo del sistema monetario que se use, funcionará o no.
